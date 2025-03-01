@@ -11,7 +11,7 @@
                 </div>
                 <div class="card-body">
                     @if (isset($user))
-                        <form action="{{ url('/update') }}" method="POST">
+                        <form action="{{ url('users/update') }}" method="POST">
                             @csrf
                             <input type="hidden" name="id" value="{{ $user->id }}">
                             <div class="mb-3">
@@ -36,7 +36,7 @@
                             </div>
                         </form>
                     @else
-                        <form action="create" method="POST">
+                        <form action="users/create" method="POST">
                             @csrf
                             <div class="mb-3">
                                 <label for="user-name" class="form-label">Name</label>
@@ -83,13 +83,13 @@
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>
-                                        <form action="{{ url('/edit/' . $user->id) }}" method="POST" class="d-inline">
+                                        <form action="{{ url('users/edit/' . $user->id) }}" method="POST" class="d-inline">
                                             @csrf
                                             <button type="submit" class="btn btn-warning">
                                                 <i class="fa fa-edit me-2"></i>Edit
                                             </button>
                                         </form>
-                                        <form action="/delete/{{ $user->id }}" method="POST" class="d-inline">
+                                        <form action="users/delete/{{ $user->id }}" method="POST" class="d-inline">
                                             @csrf
                                             <button type="submit" class="btn btn-danger">
                                                 <i class="fa fa-trash me-2"></i>Delete
