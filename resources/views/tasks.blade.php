@@ -9,7 +9,7 @@
                     </div>
                     <div class="card-body">
                         <!-- Update Task Form -->
-                        <form action="{{ url('tasks/update') }}" method="POST">
+                        <form action="{{ url('/tasks/update') }}" method="POST">
                             @csrf
                             <input type="hidden" name="id" value="{{ $task->id }}">
                             <!-- Task Name -->
@@ -32,7 +32,7 @@
                     </div>
                     <div class="card-body">
                         <!-- New Task Form -->
-                        <form action="tasks/create" method="POST">
+                        <form action="/tasks/create" method="POST">
                             @csrf
                             <!-- Task Name -->
                             <div class="mb-3">
@@ -70,13 +70,13 @@
                                 <tr>
                                     <td>{{ $task->name }}</td>
                                     <td>
-                                        <form action="tasks/delete/{{ $task->id }}" method="POST" class="d-inline">
+                                        <form action="/tasks/delete/{{ $task->id }}" method="POST" class="d-inline">
                                             @csrf
                                             <button type="submit" class="btn btn-danger">
                                                 <i class="fa fa-trash me-2"></i>Delete
                                             </button>
                                         </form>
-                                        <form action="tasks/edit/{{ $task->id }}" method="POST" class="d-inline">
+                                        <form action="/tasks/edit/{{ $task->id }}" method="POST" class="d-inline">
                                             @csrf
                                             <button type="submit" class="btn btn-info">
                                                 <i class="fa fa-info me-2"></i>Edit
