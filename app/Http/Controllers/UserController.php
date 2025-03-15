@@ -16,20 +16,27 @@ class UserController extends Controller
         return view('users', compact('users'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        $name = $_POST['name'];
-        $email = $_POST['email'];
-        $password = Hash::make($_POST['password']); // Hash the password
+        // $name = $_POST['name'];
+        // $email = $_POST['email'];
+        // $password = Hash::make($_POST['password']); // Hash the password
         // DB::table('users')->insert([
         //     'name' => $name,
         //     'email' => $email,
         //     'password' => $password,
         // ]);
+
+        $validated = $request->validate([
+            'name' => 'required|max:15|min:3',
+            'email' => 'required|email',
+            'password' => 'required|min:8'
+        ]);
+
         $user = new User();
-        $user->name = $name;
-        $user->email = $email;
-        $user->password = $password;
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
         $user->save();
         return redirect('/users');
     }
@@ -45,12 +52,12 @@ class UserController extends Controller
         return view('users', compact('user', 'users'));
     }
 
-    public function update()
+    public function update(Request $request)
     {
-        $id = $_POST['id'];
-        $name = $_POST['name'];
-        $email = $_POST['email'];
-        $password = $_POST['password'] ? Hash::make($_POST['password']) : null; // Update password only if provided
+        // $id = $_POST['id'];
+        // $name = $_POST['name'];
+        // $email = $_POST['email'];
+        $password = $request->password ? Hash::make($request->password) : null; // Update password only if provided
         // $updateData = [
         //     'name' => $name,
         //     'email' => $email,
@@ -62,9 +69,15 @@ class UserController extends Controller
 
         // DB::table('users')->where('id', $id)->update($updateData);
 
-        $user = User::findOrFail($id);
-        $user->name = $name;
-        $user->email = $email;
+        $validated = $request->validate([
+            'name' => 'required|max:15|min:3',
+            'email' => 'required|email',
+        ]);
+
+        $user = User::findOrFail($request->id);
+
+        $user->name = $request->name;
+        $user->email = $request->email;
         if ($password) {
             $user->password = $password;
         }
@@ -76,8 +89,14 @@ class UserController extends Controller
     public function destroy($id)
     {
         // DB::table('users')->where('id', $id)->delete();
-        $user = User::findOrFail($id);
-        $user->delete();
+
+        //First Way
+        /*
+            $user = User::findOrFail($id);
+            $user->delete();
+        */
+        //Second Way
+        User::destroy($id);
         return redirect('/users');
     }
 }

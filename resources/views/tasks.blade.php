@@ -15,9 +15,14 @@
                             <!-- Task Name -->
                             <div class="mb-3">
                                 <label for="task-name" class="form-label">Task</label>
-                                <input type="text" name="name" id="task-name" class="form-control"
-                                    value="{{ $task->name }}">
+                                <input type="text" name="name" id="task-name"
+                                    class="form-control @error('name') is-invalid @enderror" value="{{ $task->name }}">
                             </div>
+                            @error('name')
+                                <div class="alert alert-danger">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                             <!-- Update Task Button -->
                             <div>
                                 <button type="submit" class="btn btn-primary">
@@ -37,9 +42,14 @@
                             <!-- Task Name -->
                             <div class="mb-3">
                                 <label for="task-name" class="form-label">Task</label>
-                                <input type="text" name="name" id="task-name" class="form-control" value="">
+                                <input type="text" name="name" id="task-name"
+                                    class="form-control @error('name') is-invalid @enderror" value="">
                             </div>
-
+                            @error('name')
+                                <div class="alert alert-danger">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                             <!-- Add Task Button -->
                             <div>
                                 <button type="submit" class="btn btn-primary">
@@ -76,7 +86,7 @@
                                                 <i class="fa fa-trash me-2"></i>Delete
                                             </button>
                                         </form>
-                                        <form action="/tasks/edit/{{ $task->id }}" method="POST" class="d-inline">
+                                        <form action="/tasks/edit/{{ $task->id }}" method="get" class="d-inline">
                                             @csrf
                                             <button type="submit" class="btn btn-info">
                                                 <i class="fa fa-info me-2"></i>Edit
